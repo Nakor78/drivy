@@ -165,6 +165,68 @@ var rentalModifications = [{
   'pickupDate': '2015-12-05'
 }];
 
+/* *************
+Exercice 1
+************* */
+
+// computes the number of days between 2 dates (in parameters)
+function numberDays(pickupDate, returnDate)
+{
+	var varNumberDays = 1;
+	var dateP = new Date(pickupDate);
+	var dateR = new Date(returnDate);	
+	
+	while (1)
+	{
+		if (dateP = dateR)
+		{
+			return varNumberDays;
+		}
+		
+		var newDateP = new Date();
+		newDateP.setDate(dateP.getDate()+1);
+		dateP = newDateP;
+		varNumberDays++;
+	}
+}
+
+// updates the array rentals with an updated price
+function newRentals(tabDriver, tabCar)
+{
+	for(var i = 0; i < tabDriver.length; i++)
+	{
+		var idCar = tabDriver[i].carId;
+		var dist = tabDriver[i].distance;	
+		var varNumberDays = numberDays(tabDriver[i].pickupDate, tabDriver[i].returnDate);
+		
+		for(var j = 0; j < tabCar.length; j++)
+		{
+			if (idCar == tabCar[j].id)
+			{
+				var distanceComponent = dist*tabCar[j].pricePerKm;
+				var timeComponent = varNumberDays*tabCar[j].pricePerDay;
+			}
+		}
+		var price = distanceComponent + timeComponent;
+		
+		tabDriver[i].price = price;
+	}
+}
+
+// exercise 1
+newRentals(rentals, cars);
+console.log(rentals);
+
+/* *************
+Exercice 2
+************* */
+
+
+
+
+
+
+
 console.log(cars);
 console.log(rentals);
 console.log(actors);
