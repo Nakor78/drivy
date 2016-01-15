@@ -289,6 +289,7 @@ console.log(rentals);
 Exercise 4
 ************* */
 
+// computes the new amount price if the driver subscribed to deductible option
 function deductible(tabDrivers)
 {
 	for(var i = 0; i < tabDrivers.length; i++)
@@ -310,6 +311,64 @@ console.log("Exercise 4");
 deductible(rentals);
 console.log(rentals);
 
+/* *************
+Exercise 5
+************* */
+
+// updates the array actors with updated amounts
+function newActors(tabDrivers, tabActors)
+{
+	for(var i = 0; i < tabActors.length; i++)
+	{
+		for(var j = 0; j < tabDrivers.length; j++)
+		{
+			if(tabActors[i].rentalId == tabDrivers[j].id)
+			{
+				for(var k = 0; k < tabActors[i].payment.length; k++)
+				{
+					if(tabActors[i].payment[k].who == "driver")
+					{
+						tabActors[i].payment[k].amount = tabDrivers[j].price;
+					}
+					
+					if(tabActors[i].payment[k].who == "owner")
+					{
+						tabActors[i].payment[k].amount = tabDrivers[j].price * 0.70;
+					}
+			
+					if(tabActors[i].payment[k].who == "insurance")
+					{
+						tabActors[i].payment[k].amount = tabDrivers[j].commission.insurance;
+					}
+			
+					if(tabActors[i].payment[k].who == "assistance")
+					{
+						tabActors[i].payment[k].amount = tabDrivers[i].commission.assistance;
+					}
+			
+					if(tabActors[i].payment[k].who == "drivy")
+					{
+						
+						var varNumberDays = numberDays(tabDrivers[j].pickupDate, tabDrivers[j].returnDate);
+						var varDeductible = 0;
+		
+						if(tabDrivers[j].options.deductibleReduction == true)
+						{
+							varDeductible += varNumberDays * 4;
+						}
+						
+						tabActors[i].payment[k].amount = tabDrivers[i].commission.drivy + varDeductible;
+					}					
+				}
+			}
+		}
+	}
+}
+
+// exercise 5
+console.log("Exercise 5");
+newActors(rentals, actors);
+console.log(actors);
 
 
 
