@@ -166,28 +166,16 @@ var rentalModifications = [{
 }];
 
 /* *************
-Exercice 1
+Exercise 1
 ************* */
 
-// computes the number of days between 2 dates (in parameters)
-function numberDays(pickupDate, returnDate)
+// computes the number of days between 2 dates (inputed as parameters)
+function numberDays(d1,d2)
 {
-	var varNumberDays = 1;
-	var dateP = new Date(pickupDate);
-	var dateR = new Date(returnDate);	
-	
-	while (1)
-	{
-		if (dateP = dateR)
-		{
-			return varNumberDays;
-		}
-		
-		var newDateP = new Date();
-		newDateP.setDate(dateP.getDate()+1);
-		dateP = newDateP;
-		varNumberDays++;
-	}
+     var ts1 = new Date(d1).getTime();
+     var ts2 = new Date(d2).getTime();
+	 
+     return ((ts2-ts1)/(86400*1000))+1;
 }
 
 // updates the array rentals with an updated price
@@ -198,27 +186,80 @@ function newRentals(tabDriver, tabCar)
 		var idCar = tabDriver[i].carId;
 		var dist = tabDriver[i].distance;	
 		var varNumberDays = numberDays(tabDriver[i].pickupDate, tabDriver[i].returnDate);
+				
+		for(var j = 0; j < tabCar.length; j++)
+		{
+			if (idCar == tabCar[j].id)
+			{
+				var distanceComponent = dist*(tabCar[j].pricePerKm);
+				var timeComponent = varNumberDays*(tabCar[j].pricePerDay);
+				var price = distanceComponent + timeComponent;
+				
+				tabDriver[i].price = price;	
+			}
+		}			
+	}
+}
+
+// exercise 1
+console.log("Exercise 1");
+newRentals(rentals, cars);
+console.log(rentals);
+
+/* *************
+Exercise 2
+************* */
+
+function decreasedPrice(tabDriver, tabCar)
+{
+	for(var i = 0; i < tabDriver.length; i++)
+	{	
+		var idCar = tabDriver[i].carId;
+		var dist = tabDriver[i].distance;	
+		var varNumberDays = numberDays(tabDriver[i].pickupDate, tabDriver[i].returnDate);
 		
 		for(var j = 0; j < tabCar.length; j++)
 		{
 			if (idCar == tabCar[j].id)
 			{
-				var distanceComponent = dist*tabCar[j].pricePerKm;
-				var timeComponent = varNumberDays*tabCar[j].pricePerDay;
+				var distanceComponent = dist*(tabCar[j].pricePerKm);
+				var timeComponent = 0;
+				
+				if (varNumberDays == 1)
+				{
+					timeComponent += varNumberDays*(tabCar[j].pricePerDay) * 1;
+				}
+				
+				if (varNumberDays > 1 && varNumberDays <= 4)
+				{
+					timeComponent += varNumberDays*(tabCar[j].pricePerDay) * 0.90;
+				}
+		
+				if (varNumberDays > 4 && varNumberDays <= 10)
+				{
+					timeComponent += varNumberDays*(tabCar[j].pricePerDay) * 0.70;
+				}
+		
+				if (varNumberDays > 10)
+				{
+					timeComponent += varNumberDays*(tabCar[j].pricePerDay) * 0.50;
+				}	
+				
+				var price = distanceComponent + timeComponent;
+				
+				tabDriver[i].price = price;	
 			}
 		}
-		var price = distanceComponent + timeComponent;
-		
-		tabDriver[i].price = price;
 	}
 }
 
-// exercise 1
-newRentals(rentals, cars);
+// exercise 2
+console.log("Exercise 2");
+decreasedPrice(rentals, cars);
 console.log(rentals);
 
 /* *************
-Exercice 2
+Exercise 3
 ************* */
 
 
