@@ -223,27 +223,27 @@ function decreasedPrice(tabDrivers, tabCars)
 		{
 			if (idCar == tabCars[j].id)
 			{
-				var distanceComponent = dist*(tabCars[j].pricePerKm);
+				var distanceComponent = dist * (tabCars[j].pricePerKm);
 				var timeComponent = 0;
 				
 				if (varNumberDays == 1)
 				{
-					timeComponent += varNumberDays*(tabCars[j].pricePerDay) * 1;
+					timeComponent += varNumberDays * (tabCars[j].pricePerDay) * 1;
 				}
 				
 				if (varNumberDays > 1 && varNumberDays <= 4)
 				{
-					timeComponent += varNumberDays*(tabCars[j].pricePerDay) * 0.90;
+					timeComponent += varNumberDays * (tabCars[j].pricePerDay) * 0.90;
 				}
 		
 				if (varNumberDays > 4 && varNumberDays <= 10)
 				{
-					timeComponent += varNumberDays*(tabCars[j].pricePerDay) * 0.70;
+					timeComponent += varNumberDays * (tabCars[j].pricePerDay) * 0.70;
 				}
 		
 				if (varNumberDays > 10)
 				{
-					timeComponent += varNumberDays*(tabCars[j].pricePerDay) * 0.50;
+					timeComponent += varNumberDays * (tabCars[j].pricePerDay) * 0.50;
 				}	
 				
 				var price = distanceComponent + timeComponent;
@@ -264,7 +264,7 @@ Exercise 3
 ************* */
 
 // updates the array rentals with an updated commission
-function commission(tabDrivers, tabCars, tabActors)
+function commission(tabDrivers)
 {
 	for(var i = 0; i < tabDrivers.length; i++)
 	{		
@@ -282,7 +282,32 @@ function commission(tabDrivers, tabCars, tabActors)
 
 // exercise 3
 console.log("Exercise 3");
-commission(rentals, cars, actors);
+commission(rentals);
+console.log(rentals);
+
+/* *************
+Exercise 4
+************* */
+
+function deductible(tabDrivers)
+{
+	for(var i = 0; i < tabDrivers.length; i++)
+	{
+		var varNumberDays = numberDays(tabDrivers[i].pickupDate, tabDrivers[i].returnDate);
+		var varDeductible = 0;
+		
+		if(tabDrivers[i].options.deductibleReduction == true)
+		{
+			varDeductible += varNumberDays * 4;
+		}
+		
+		tabDrivers[i].price += varDeductible;
+	}
+}
+
+// exercise 4
+console.log("Exercise 4");
+deductible(rentals);
 console.log(rentals);
 
 
